@@ -9,7 +9,7 @@ export default function App() {
                 Feeder
             </div>
             <div className="scene__tank">
-                Tank
+                <FishTank/>
             </div>
         </div>
     )

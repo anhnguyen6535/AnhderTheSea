@@ -25,11 +25,14 @@
 }
 
 .scene__feeder {
-    height: 200px;
+    height: 100px;
     background-color: lightgray;
 }
 
 .scene__tank {
     flex-grow: 1; /* make tank fill the rest of the space */
-    background-color: lightblue;
+    /* background-color: lightblue; */
+    background-image: url('/tank7.png');
+    background-repeat: no-repeat;
+    background-size:cover;
 }
