@@ -33,7 +33,3 @@
     flex-grow: 1; /* make tank fill the rest of the space */
     background-color: lightblue;
 }
-
-.tank_svg {
-    width: 80%;
-}
