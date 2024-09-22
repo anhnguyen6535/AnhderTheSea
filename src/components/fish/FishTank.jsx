@@ -4,7 +4,7 @@ import Fish from './Fish';
 const createRandomFish = (id) => ({
   id,
   top: Math.floor(Math.random() * 60) + 20 + 'vh',
-  left: Math.floor(Math.random() * 80) + 'vw',
+  left: Math.floor(Math.random() * 800),
 });
 
 export const FishTank = () => {
