@@ -20,25 +20,37 @@ export default function Fish({ top, left }) {
         return newLeft;
       });
 
-      animationFrameId = requestAnimationFrame(moveFish); // Continue animation
+      animationFrameId = requestAnimationFrame(moveFish); // Continue anim
     };
 
-    animationFrameId = requestAnimationFrame(moveFish); // Start the animation
+    animationFrameId = requestAnimationFrame(moveFish); // Start anim
 
-    return () => cancelAnimationFrame(animationFrameId); // Cleanup
+    return () => cancelAnimationFrame(animationFrameId); 
   }, [direction]); 
 
   return (
-    <img 
-      src="./fish.png" 
-      style={{
-        width: '100px',
-        height: 'auto',
-        position: 'absolute',
-        top: top,
-        left: `${leftPos}px`, 
-        transform: `scaleX(${direction})`, // Flip fish horizontally
-      }}
-    />
+    <div style={{ position: 'absolute', top: top, left: `${leftPos}px` }}>
+      <img 
+        src="./heart.png" 
+        style={{
+          width: '50px', 
+          height: 'auto',
+          position: 'absolute',
+          bottom: '100%', 
+          left: '25%', 
+        }} 
+        alt="Health Bar"
+      />
+      <img 
+        src="./fish.png" 
+        style={{
+          width: '100px',
+          height: 'auto',
+          position: 'relative', 
+          transform: `scaleX(${direction})`, // Flip horizontally
+        }}
+        alt="Fish"
+      />
+    </div>
   );
 }
