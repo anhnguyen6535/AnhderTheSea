@@ -1,18 +1,39 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%; 
+/*html, body {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    height: 100%; */
+/*}*/
+
+/*.background {*/
+/*    background-image: url('/tank2.jpg'); */
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*    height: 100vh;*/
+/*    width: 100%;*/
+/*  }*/
+
+/*.small-fish {*/
+/*    width: 150px;*/
+/*    height: auto; */
+/*}*/
+
+.scene {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100dvh;
 }
 
-.background {
-    background-image: url('/tank2.jpg'); 
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    width: 100%;
-  }
+.scene__feeder {
+    height: 200px;
+    background-color: lightgray;
+}
 
-.small-fish {
-    width: 150px;
-    height: auto; 
+.scene__tank {
+    flex-grow: 1; /* make tank fill the rest of the space */
+    background-color: lightblue;
+}
+
+.tank_svg {
+    width: 80%;
 }
