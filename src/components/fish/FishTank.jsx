@@ -3,7 +3,7 @@ import Fish from './Fish';
 
 const createRandomFish = (id) => ({
   id,
-  top: Math.floor(Math.random() * 60) + 25 + 'vh',
+  top: Math.floor(Math.random() * 55) + 20 + 'vh',
   left: Math.floor(Math.random() * 800),
 });
 
