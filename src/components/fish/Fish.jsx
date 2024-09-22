@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function Fish({ top, left }) {
+export default function Fish({ top, left, feed=false }) {
   const [leftPos, setLeft] = useState(left); 
   const [direction, setDirection] = useState(1); 
 
@@ -31,7 +31,7 @@ export default function Fish({ top, left }) {
   return (
     <div style={{ position: 'absolute', top: top, left: `${leftPos}px` }}>
       <img 
-        src="./heart.png" 
+        src={feed ? "./heart.png" : "./heart_blank.png"} 
         style={{
           width: '50px', 
           height: 'auto',
