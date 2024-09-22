@@ -1,7 +1,6 @@
 import "./App.css";
-import Fish from "./Fish";
-import { FishTank } from "./FishTank";
 import Feeder from "./components/feeder/Feeder.jsx";
+import { FishTank } from "./components/fish/FishTank.jsx";
 
 export default function App() {
     return(
