@@ -1,6 +1,7 @@
 import "./Feeder.css"
 import {useEffect, useRef, useState, forwardRef} from "react";
 import FeederSVG from "./FeederSVG.jsx";
+import shakeSound from "../../../public/shake.mp3"
 
 const Feeder = forwardRef((props, ref) => {
     const {dropFood} = props
@@ -93,6 +94,12 @@ const Feeder = forwardRef((props, ref) => {
         } else {
             setIsClick(true);
             dropFood();
+
+            // Drops food with shake sound effect
+            const shakeEffect = new Audio(shakeSound);
+            shakeEffect.play().catch((error) => {
+                console.error('Error with shake effect');
+            });
 
             // animation is 500ms so set click to false when animation is done (also prevents spamming button)
             setTimeout(() => {
