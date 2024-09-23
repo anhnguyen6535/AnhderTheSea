@@ -16,6 +16,12 @@ const Feeder = () => {
     // used to track the feeder div (this way the player can't drag the shaker out of the div)
     const feederRef = useRef(null);
 
+    // track dragging position
+    const [dragStart, setDragStart] = useState({ x: 0 });
+
+    // check if the button is clicked
+    const [isClick, setIsClick] = useState(false);
+
     /**
      * When the mouse is pressed set dragging to true. The food shaker is being moved.
      * @param event the mousedown event
@@ -28,6 +34,9 @@ const Feeder = () => {
         // Essentially this determines where in the shaker the player clicked
         // in respect to the left edge
         setClickPosition(event.clientX - shakerLX.x);
+
+        // drag starts where we click the mouse
+        setDragStart({ x: event.clientX });
     };
 
     /**
@@ -71,7 +80,23 @@ const Feeder = () => {
     /**
      * When the player release the mouse stop dragging of the food shaker.
      */
-    const handleMouseUp = () => {
+    const handleMouseUp = (event) => {
+        const epsilon = 5;
+
+        const delta = Math.abs(event.clientX - dragStart.x);
+
+        // epsilon represents the threshold amount that needs to be dragged to consider it dragging
+        // if greater it was not a click
+        if (delta > epsilon) {
+            setIsClick(false);
+        } else {
+            setIsClick(true);
+
+            // animation is 500ms so set click to false when animation is done (also prevents spamming button)
+            setTimeout(() => {
+                setIsClick(false);
+            }, 500);
+        }
         setIsDragging(false);
     };
 
@@ -101,7 +126,7 @@ const Feeder = () => {
             ref={feederRef}
         >
             <button
-                className="feeder__btn"
+                className={`feeder__btn ${isClick ? 'feeder--ani' : ''}`}
                 onMouseDown={handleMouseDown}
                 style={{ transform: `translateX(${shakerLX.x}px)` }}
             >
