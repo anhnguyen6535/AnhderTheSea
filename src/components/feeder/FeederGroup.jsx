@@ -1,7 +1,7 @@
 import Feeder from "./Feeder";
-import "./feeder.css";
 import React, { useState, useEffect, useRef } from 'react';
 import Food from "./Food";
+import "./FeederGroup.css"
 
 export default function FeederGroup() {
     const [foods, setFoods] = useState([])
@@ -35,11 +35,9 @@ export default function FeederGroup() {
     }, [foods]) 
 
     return (
-        <div>
-            <div style={{ border: 'none' }}>
-                <Feeder ref={feederRef} dropFood={dropFood}/>
-            </div>
-            {/* <button onClick={dropFood}>Drop Food</button> */}
+        <div className="feeder-group-wrapper">
+            <Feeder ref={feederRef} dropFood={dropFood}/>
+            {/*<button onClick={dropFood}>Drop Food</button> */}
             {foods.map((food, index) => (
                 <Food key={index} top = {food.top} left={food.left}/>
             ))}

@@ -1,4 +1,4 @@
-import "./feeder.css"
+import "./Feeder.css"
 import {useEffect, useRef, useState, forwardRef} from "react";
 import FeederSVG from "./FeederSVG.jsx";
 
