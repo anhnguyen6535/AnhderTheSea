@@ -28,6 +28,7 @@
 
 .scene__feeder {
     height: 150px;
+    z-index: 2;
 }
 
 .scene__tank {

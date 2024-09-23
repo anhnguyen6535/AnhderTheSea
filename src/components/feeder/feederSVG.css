@@ -1,4 +1,4 @@
-.feeder__btn:active .feeder-svg{
+.feeder--ani .feeder-svg{
     animation: swing 0.5s ease-in-out;
 }
 
