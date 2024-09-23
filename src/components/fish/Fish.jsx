@@ -29,16 +29,27 @@ export default function Fish({ top, left, feed=false }) {
   }, [direction]); 
 
   return (
-    <div style={{ position: 'absolute', top: top, left: `${leftPos}px` }}>
+    <div style={{
+        position: 'absolute',
+        top: top, left: `${leftPos}px`,
+        WebkitUserDrag: 'none',
+        userDrag: 'none',
+        pointerEvents: 'none',
+        WebkitUserSelect: 'none',
+        MozUserSelect: 'none',
+        msUserSelect: 'none',
+        userSelect: 'none'
+    }}>
       <img 
-        src={feed ? "./heart.png" : "./heart_blank.png"} 
+        src={feed ? "./heart.png" : "./heart_blank.png"}
+        className="heart"
         style={{
-          width: '50px', 
+          width: '50px',
           height: 'auto',
           position: 'absolute',
-          bottom: '100%', 
-          left: '25%', 
-        }} 
+          bottom: '100%',
+          left: '25%',
+        }}
         alt="Health Bar"
       />
       <img 
@@ -46,7 +57,7 @@ export default function Fish({ top, left, feed=false }) {
         style={{
           width: '100px',
           height: 'auto',
-          position: 'relative', 
+          position: 'relative',
           transform: `scaleX(${direction})`, // flip horizontally
         }}
         alt="Fish"
