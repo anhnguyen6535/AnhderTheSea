@@ -45,7 +45,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('../public/tank7.png');
+    background-image: url('../public/aquarium.png');
     background-size: cover;
     opacity: 0.9;
     z-index: 0;
