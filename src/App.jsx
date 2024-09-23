@@ -1,7 +1,6 @@
 import "./App.css";
 import Feeder from "./components/feeder/Feeder.jsx";
 import FeederGroup from "./components/feeder/FeederGroup.jsx";
-import FoodSVG from "./components/feeder/FoodSVG.jsx";
 import { FishTank } from "./components/fish/FishTank.jsx";
 
 export default function App() {
