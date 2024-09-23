@@ -29,7 +29,7 @@ export default function FeederGroup() {
         }
 
         // drop every 50ms
-        const intervalId = setInterval(animateDrop, 50)
+        const intervalId = setInterval(animateDrop, 10)
         
         return () => clearInterval(intervalId) 
     }, [foods]) 
