@@ -1,8 +1,8 @@
 import "./feeder.css"
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState, forwardRef} from "react";
 import FeederSVG from "./FeederSVG.jsx";
 
-const Feeder = () => {
+const Feeder = forwardRef((props, ref) => {
 
     // Checks if player is dragging the shaker
     const [isDragging, setIsDragging] = useState(false);
@@ -126,6 +126,7 @@ const Feeder = () => {
             ref={feederRef}
         >
             <button
+                ref = {ref}
                 className={`feeder__btn ${isClick ? 'feeder--ani' : ''}`}
                 onMouseDown={handleMouseDown}
                 style={{ transform: `translateX(${shakerLX.x}px)` }}
@@ -134,6 +135,6 @@ const Feeder = () => {
             </button>
         </div>
     )
-}
+})
 
 export default Feeder;
