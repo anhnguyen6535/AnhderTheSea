@@ -20,7 +20,7 @@ export default function FeederGroup() {
         const animateDrop = () => {
             setFoods(prevFoods => {
                 return prevFoods.map(food => {
-                    const newTop = food.top + 5 // move down by 5px
+                    const newTop = food.top + 2 // move down by 2px
 
                     // stop when reaching bottom 
                     return newTop < window.innerHeight ? { ...food, top: newTop } : null
@@ -28,8 +28,8 @@ export default function FeederGroup() {
             })
         }
 
-        // drop every 50ms
-        const intervalId = setInterval(animateDrop, 50)
+        // drop every 2ms
+        const intervalId = setInterval(animateDrop, 2)
         
         return () => clearInterval(intervalId) 
     }, [foods]) 
