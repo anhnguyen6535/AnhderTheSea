@@ -22,7 +22,7 @@
     flex-direction: column;
     width: 100%;
     min-height: 100dvh;
-    background: url("./bedroom-4138509.jpg");
+    background-image: url("/bedroom-4138509.jpg");
     background-size: cover;
 }
 
