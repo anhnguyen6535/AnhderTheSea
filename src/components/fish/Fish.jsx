@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import fishIMG from "../../../public/fish.png";
+import heart from "../../../public/heart.png";
+import heartBlank from "../../../public/heart_blank.png";
 
 export default function Fish({ top, left, feed=false }) {
   const [leftPos, setLeft] = useState(left) 
@@ -41,7 +44,7 @@ export default function Fish({ top, left, feed=false }) {
         userSelect: 'none'
     }}>
       <img 
-        src={feed ? "./heart.png" : "./heart_blank.png"}
+        src={feed ? `${heart}` : `${heartBlank}`}
         className="heart"
         style={{
           width: '50px',
@@ -53,7 +56,7 @@ export default function Fish({ top, left, feed=false }) {
         alt="Health Bar"
       />
       <img 
-        src="./fish.png" 
+        src={fishIMG}
         style={{
           width: '100px',
           height: 'auto',
