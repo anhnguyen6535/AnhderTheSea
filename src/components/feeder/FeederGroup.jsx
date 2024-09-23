@@ -37,11 +37,11 @@ export default function FeederGroup() {
     return (
         <div>
             <div style={{ border: 'none' }}>
-                <Feeder ref={feederRef} />
+                <Feeder ref={feederRef} dropFood={dropFood}/>
             </div>
-            <button onClick={dropFood}>Drop Food</button>
-            {foods.map(food => (
-                <Food top = {food.top} left={food.left}/>
+            {/* <button onClick={dropFood}>Drop Food</button> */}
+            {foods.map((food, index) => (
+                <Food key={index} top = {food.top} left={food.left}/>
             ))}
         </div>
     )

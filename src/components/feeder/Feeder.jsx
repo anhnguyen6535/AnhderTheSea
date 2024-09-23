@@ -3,6 +3,7 @@ import {useEffect, useRef, useState, forwardRef} from "react";
 import FeederSVG from "./FeederSVG.jsx";
 
 const Feeder = forwardRef((props, ref) => {
+    const {dropFood} = props
 
     // Checks if player is dragging the shaker
     const [isDragging, setIsDragging] = useState(false);
@@ -91,6 +92,7 @@ const Feeder = forwardRef((props, ref) => {
             setIsClick(false);
         } else {
             setIsClick(true);
+            dropFood();
 
             // animation is 500ms so set click to false when animation is done (also prevents spamming button)
             setTimeout(() => {
