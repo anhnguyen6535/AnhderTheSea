@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import fishIMG from "../../../public/fish.png";
 import heart from "../../../public/heart.png";
 import heartBlank from "../../../public/heart_blank.png";
 import "./fish.css"
+import { getFishImage } from './FishHelper';
 
 export default function Fish({id, top, left, feed= false, setFishes}) {
   const [leftPos, setLeft] = useState(left) 
   const [direction, setDirection] = useState(1)
+  const [fishImg, setFishImg] = useState()
+
+  useEffect(() =>{
+    const img = getFishImage()
+    setFishImg(img.link)
+    setDirection(img.dir)
+  },[])
 
   // Fish Animation
   useEffect(() => {
@@ -50,7 +57,7 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
         alt="Health Bar"
       />
       <img 
-        src={fishIMG}
+        src={fishImg}
         className='fish-image'
         style={{transform: `scaleX(${direction})`}} // flip horizontally
         alt="Fish"
