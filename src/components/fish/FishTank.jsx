@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import Fish from './Fish';
 
+const minDistance = 50;
+
 const createRandomFish = (id) => ({
   id,
-  top: Math.floor(Math.random() * 55) + 20 + 'vh',
-  left: Math.floor(Math.random() * 800),
+  top: Math.floor(Math.random() * 55) + 20,
+  left: Math.floor(Math.random() * 1000) + 400,
   isColliding: false,
 });
 

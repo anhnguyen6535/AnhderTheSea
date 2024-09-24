@@ -46,7 +46,7 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
   return (
     <div style={{
         position: 'absolute',
-        top: top, left: `${leftPos}px`,
+        top: `${top}vh`, left: `${leftPos}px`,
         WebkitUserDrag: 'none',
         userDrag: 'none',
         pointerEvents: 'none',

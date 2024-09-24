@@ -28,11 +28,7 @@ export default function App() {
         const fishLeft = fish.left + leftMargin;
         const fishRight = fish.left + rightMargin; // Fish is 100px (as per Fish.jsx)
 
-        // When I logged the value it was something like 30vh60 I need the same units
-        // So I check if it is a string. If it is a string I parse it to a float to just get the number
-        // then I convert it to px
-        // not a string I can just use the value
-        const fishTop = typeof fish.top === 'string' ? (parseFloat(fish.top) * window.innerHeight / 100) : fish.top;
+        const fishTop = (fish.top * window.innerHeight) / 100;
         const fishBottom = fishTop + 52; // Best guess (from checking elements in console)
 
         const foodLeft = food.left;
