@@ -8,7 +8,6 @@ import { useAudio } from "./hooks/useAudio.js";
 export default function App() {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
-
     useAudio(audioRef, isPlaying, setIsPlaying)
 
     // State for fish and food
@@ -23,8 +22,11 @@ export default function App() {
      * @returns {boolean} true if a collision has occurred
      */
     const checkCollision = (fish, food) => {
-        const fishLeft = fish.left;
-        const fishRight = fish.left + 100; // Fish is 100px (as per Fish.jsx)
+        const leftMargin = -20
+        const rightMargin = 120
+
+        const fishLeft = fish.left + leftMargin;
+        const fishRight = fish.left + rightMargin; // Fish is 100px (as per Fish.jsx)
 
         // When I logged the value it was something like 30vh60 I need the same units
         // So I check if it is a string. If it is a string I parse it to a float to just get the number
