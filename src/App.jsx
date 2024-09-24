@@ -13,10 +13,7 @@ export default function App() {
         const handleClick = () => {
             if(!isPlaying){
                 setIsPlaying(true);
-                const audio = audioRef.current;
-                audio.play()
-                    .then(() => console.log("Playing"))
-                    .catch((error) => console.error(error));
+                audioRef.current.play();
             }
         };
 
@@ -31,6 +28,7 @@ export default function App() {
     let [foods, setFoods] = useState([])
 
     /**
+     * Link to video I used to learn this: https://www.youtube.com/watch?v=r0sy-Cr6WHY
      * Collision logic, detects collision based on hitbox. Each fish and food is a box.
      * @param fish The fish to check
      * @param food The food to check
@@ -53,10 +51,10 @@ export default function App() {
         const foodBottom = food.top + 16; // Best guess
 
         // Hit box collision
-        return !(fishRight < foodLeft ||
-            fishLeft > foodRight ||
-            fishBottom < foodTop ||
-            fishTop > foodBottom);
+        return !(foodLeft > fishRight ||
+            foodRight < fishLeft ||
+            foodTop > fishBottom ||
+            foodBottom < fishTop);
     };
 
     useEffect(() => {
