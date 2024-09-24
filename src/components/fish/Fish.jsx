@@ -7,16 +7,6 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
   const [leftPos, setLeft] = useState(left) 
   const [direction, setDirection] = useState(1)
 
-    // Update left position of the fish that is moving
-    const updateLeft = (id, newLeft) => {
-        setFishes((prevFishes) =>
-            prevFishes.map((fish) =>
-                fish.id === id ? { ...fish, left: newLeft } : fish
-            )
-        );
-    };
-
-
   // Fish Animation
   useEffect(() => {
     let animationFrameId
@@ -31,7 +21,6 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
           setDirection((prevDirection) => -prevDirection)
         }
 
-        updateLeft(id, newLeft);
         return newLeft
       })
 
@@ -42,6 +31,15 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
 
     return () => cancelAnimationFrame(animationFrameId)
   }, [direction]);
+
+  // Update the parent state only when leftPos changes
+  useEffect(() => {
+    setFishes((prevFishes) =>
+      prevFishes.map((fish) =>
+        fish.id === id ? { ...fish, left: leftPos } : fish
+      )
+    );
+  }, [leftPos, id, setFishes]);
 
   return (
     <div style={{
