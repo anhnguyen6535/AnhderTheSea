@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Food from "./Food";
 import "./FeederGroup.css"
 
-export default function FeederGroup() {
-    const [foods, setFoods] = useState([])
+export default function FeederGroup({foods, setFoods}) {
+    // const [foods, setFoods] = useState([])
     const feederRef = useRef()
 
     const dropFood = () => {

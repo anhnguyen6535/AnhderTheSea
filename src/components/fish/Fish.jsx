@@ -3,9 +3,19 @@ import fishIMG from "../../../public/fish.png";
 import heart from "../../../public/heart.png";
 import heartBlank from "../../../public/heart_blank.png";
 
-export default function Fish({ top, left, feed=false }) {
+export default function Fish({id, top, left, feed= false, setFishes}) {
   const [leftPos, setLeft] = useState(left) 
-  const [direction, setDirection] = useState(1) 
+  const [direction, setDirection] = useState(1)
+
+    // Update left position of the fish that is moving
+    const updateLeft = (id, newLeft) => {
+        setFishes((prevFishes) =>
+            prevFishes.map((fish) =>
+                fish.id === id ? { ...fish, left: newLeft } : fish
+            )
+        );
+    };
+
 
   // Fish Animation
   useEffect(() => {
@@ -18,8 +28,10 @@ export default function Fish({ top, left, feed=false }) {
         const newLeft = prevLeft + direction * 2 // move by 2px each frame
         // if the fish hits the right or left boundary, reverse direction
         if (newLeft + fishWidth >= screenWidth || newLeft <= 0) {
-          setDirection((prevDirection) => -prevDirection) 
+          setDirection((prevDirection) => -prevDirection)
         }
+
+        updateLeft(id, newLeft);
         return newLeft
       })
 
@@ -28,8 +40,8 @@ export default function Fish({ top, left, feed=false }) {
 
     animationFrameId = requestAnimationFrame(moveFish) // start anim
 
-    return () => cancelAnimationFrame(animationFrameId) 
-  }, [direction]); 
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [direction]);
 
   return (
     <div style={{
