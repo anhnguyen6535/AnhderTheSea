@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import fishIMG from "../../../public/fish.png";
 import heart from "../../../public/heart.png";
 import heartBlank from "../../../public/heart_blank.png";
+import "./fish.css"
 
 export default function Fish({id, top, left, feed= false, setFishes}) {
   const [leftPos, setLeft] = useState(left) 
@@ -42,37 +43,16 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
   }, [leftPos, id, setFishes]);
 
   return (
-    <div style={{
-        position: 'absolute',
-        top: `${top}vh`, left: `${leftPos}px`,
-        WebkitUserDrag: 'none',
-        userDrag: 'none',
-        pointerEvents: 'none',
-        WebkitUserSelect: 'none',
-        MozUserSelect: 'none',
-        msUserSelect: 'none',
-        userSelect: 'none'
-    }}>
+    <div className='fishDiv' style={{top: `${top}vh`, left: `${leftPos}px`}}>
       <img 
         src={feed ? `${heart}` : `${heartBlank}`}
         className="heart"
-        style={{
-          width: '50px',
-          height: 'auto',
-          position: 'absolute',
-          bottom: '100%',
-          left: '25%',
-        }}
         alt="Health Bar"
       />
       <img 
         src={fishIMG}
-        style={{
-          width: '100px',
-          height: 'auto',
-          position: 'relative',
-          transform: `scaleX(${direction})`, // flip horizontally
-        }}
+        className='fish-image'
+        style={{transform: `scaleX(${direction})`}} // flip horizontally
         alt="Fish"
       />
     </div>

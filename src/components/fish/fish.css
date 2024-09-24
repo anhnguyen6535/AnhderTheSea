@@ -1,0 +1,21 @@
+.heart {
+    width: 50px;
+    height: auto;
+    position: absolute;
+    bottom: 100%;
+    left: 25%;
+}
+
+
+.fish-image {
+    width: 100px;
+    height: auto;
+    position: relative;
+}
+
+.fishDiv {
+    position: absolute;
+    pointer-events: none;
+    user-select: none; 
+    -webkit-user-drag: none;
+}
