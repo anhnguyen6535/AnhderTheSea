@@ -3,25 +3,13 @@ import FeederGroup from "./components/feeder/FeederGroup.jsx";
 import {FishTank} from "./components/fish/FishTank.jsx";
 import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
+import { useAudio } from "./hooks/useAudio.js";
 
 export default function App() {
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
 
-    // Music plays on click interaction (modern browser requires some user interaction before playing)
-    useEffect(() => {
-        const handleClick = () => {
-            if(!isPlaying){
-                setIsPlaying(true);
-                audioRef.current.play();
-            }
-        };
-
-        window.addEventListener('click', handleClick);
-        return () => {
-            window.removeEventListener('click', handleClick);
-        };
-    }, [isPlaying]);
+    useAudio(audioRef, isPlaying, setIsPlaying)
 
     // State for fish and food
     const [fishes, setFishes] = useState([]);
