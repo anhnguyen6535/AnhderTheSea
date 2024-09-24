@@ -22,8 +22,9 @@ export default function App() {
      * @returns {boolean} true if a collision has occurred
      */
     const checkCollision = (fish, food) => {
-        const leftMargin = -20
-        const rightMargin = 120
+        // extend hit box here
+        const leftMargin = -50
+        const rightMargin = 150 
 
         const fishLeft = fish.left + leftMargin;
         const fishRight = fish.left + rightMargin; // Fish is 100px (as per Fish.jsx)
