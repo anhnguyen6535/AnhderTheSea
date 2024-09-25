@@ -37,7 +37,6 @@ export const createRandomFish = () => {
 
 
     newFishes.push({id: i, top, left, isColliding: false})
-    console.log(top, left);
   }
   return newFishes
 }
