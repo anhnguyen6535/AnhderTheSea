@@ -19,11 +19,11 @@ export const createRandomFish = () => {
     let top, left
     let isTooClose
     let attempts = 0
-    const maxAttempts = 100
+    const maxAttempts = 200
 
     do{
       left = Math.floor(Math.random() * 1000) + 500
-      top = Math.floor(Math.random() * 60) + 10
+      top = Math.floor(Math.random() * 60) + 12
 
       //check distance
       isTooClose = newFishes.some(fish =>{
