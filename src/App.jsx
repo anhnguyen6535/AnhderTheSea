@@ -140,7 +140,7 @@ export default function App() {
 
             {allFull && (
                 <div className='end-countdown'>
-                    To end: {timeToEnd} / 8
+                    Reset: {timeToEnd} / 8
                 </div>
             )}
         </div>
