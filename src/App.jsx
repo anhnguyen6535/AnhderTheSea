@@ -5,6 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
 import popSound from "../public/ui-pop-up-1-197886.mp3"
+import videoBG from "../public/background3.mp4"
 
 export default function App() {
     const audioRef = useRef(null);
@@ -50,30 +51,80 @@ export default function App() {
             setFishes((prevFishes) =>
                 prevFishes.map((fish) => {
                     if (!fish.isColliding) { // Only check if it hasn't already collided
-                        const newFoods = [];
+                        const newFoods = [...foods];
                         let collisionDetected = false;
 
-                        for (const food of foods) {
+                        for (let i = 0; i < newFoods.length; i++) {
+                            const food = newFoods[i];
+
                             if (checkCollision(fish, food)) {
                                 collisionDetected = true;
+                                newFoods.splice(i, 1); // remove the food right away so it doesn't collide with another fish
+                                setFoods(newFoods);
+
                                 // Fish eat food with a pop sound
                                 const shakeEffect = new Audio(popSound).play();
-                            } else {
-                                newFoods.push(food);
+
+                                // no need to check the other food for this fish it has eaten
+                                break;
                             }
                         }
-                        if (collisionDetected) {
-                            setFoods(newFoods);
-                        }
-                        return { ...fish, isColliding: collisionDetected || fish.isColliding };
+                        return { ...fish, isColliding: collisionDetected };
                     }
-                    return fish; // Return unchanged fish if it already collided
+                    return fish; // just return the fish if a collision already occurred
                 })
             );
         };
 
         detectCollisions();
     }, [foods]);
+
+
+    // Controls game loop
+    
+    const [allFull, setAllFull] = useState(false);
+    const timeoutRef = useRef(null);
+    const [timeToEnd, setTimeToEnd] = useState(8);
+
+    const allFed = () => fishes.every(fish => fish.isColliding === true);
+
+    useEffect(() => {
+        if (allFed()) {
+            setAllFull(true);
+        } else {
+            // if at some point the fish become hungry we cannot end
+            setAllFull(false);
+            setTimeToEnd(0);
+        }
+    }, [fishes]);
+
+
+    useEffect(() => {
+        let intervalRef;
+
+        if (allFull) {
+            // only make an interval if one does not yet exist (we don't want to make a bunch of them)
+            if (!intervalRef) {
+                intervalRef = setInterval(() => {
+                    // basically every second we can increment the time to end
+                    setTimeToEnd(prev => prev + 1);
+                }, 1000);
+            }
+        } else {
+            clearInterval(intervalRef); // we cannot end because not all the fish are full
+        }
+        return () => clearInterval(intervalRef);
+    }, [allFull]);
+
+    useEffect(() => {
+        if (timeToEnd >= 8) {
+            // make all fish hungry to restart the game
+            fishes.forEach(fish => {
+                fish.isColliding = false;
+            });
+            setTimeToEnd(0); // reset time
+        }
+    }, [timeToEnd]);
 
     return(
         <div className="scene">
@@ -83,8 +134,15 @@ export default function App() {
                 <FeederGroup foods={foods} setFoods={setFoods}/>
             </div>
             <div className="scene__tank">
+                <video src={videoBG} className="video-bg" autoPlay loop muted />
                 <FishTank fishes={fishes} setFishes={setFishes}/>
             </div>
+
+            {allFull && (
+                <div className='end-countdown'>
+                    Reset: {timeToEnd} / 8
+                </div>
+            )}
         </div>
     )
 }
