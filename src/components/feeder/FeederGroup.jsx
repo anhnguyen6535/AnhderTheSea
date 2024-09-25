@@ -10,7 +10,7 @@ export default function FeederGroup({foods, setFoods}) {
     const dropFood = () => {
         const feederRect = feederRef.current.getBoundingClientRect()
         const leftPosition = feederRect.left + 25
-        const topPosition = feederRect.bottom
+        const topPosition = feederRect.bottom - 50
 
         // start dropping a new food
         setFoods(prevFoods => [...prevFoods, { id: Date.now(), left: leftPosition, top: topPosition }])
@@ -20,7 +20,7 @@ export default function FeederGroup({foods, setFoods}) {
         const animateDrop = () => {
             setFoods(prevFoods => {
                 return prevFoods.map(food => {
-                    const newTop = food.top + 2 // move down by 2px
+                    const newTop = food.top + 5 // move down by 2px
 
                     // stop when reaching bottom 
                     return newTop < window.innerHeight ? { ...food, top: newTop } : null
