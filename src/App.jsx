@@ -51,24 +51,27 @@ export default function App() {
             setFishes((prevFishes) =>
                 prevFishes.map((fish) => {
                     if (!fish.isColliding) { // Only check if it hasn't already collided
-                        const newFoods = [];
+                        const newFoods = [...foods];
                         let collisionDetected = false;
 
-                        for (const food of foods) {
+                        for (let i = 0; i < newFoods.length; i++) {
+                            const food = newFoods[i];
+
                             if (checkCollision(fish, food)) {
                                 collisionDetected = true;
+                                newFoods.splice(i, 1); // remove the food right away so it doesn't collide with another fish
+                                setFoods(newFoods);
+
                                 // Fish eat food with a pop sound
                                 const shakeEffect = new Audio(popSound).play();
-                            } else {
-                                newFoods.push(food);
+
+                                // no need to check the other food for this fish it has eaten
+                                break;
                             }
                         }
-                        if (collisionDetected) {
-                            setFoods(newFoods);
-                        }
-                        return { ...fish, isColliding: collisionDetected || fish.isColliding };
+                        return { ...fish, isColliding: collisionDetected };
                     }
-                    return fish; // Return unchanged fish if it already collided
+                    return fish; // just return the fish if a collision already occurred
                 })
             );
         };
