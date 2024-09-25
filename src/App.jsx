@@ -137,6 +137,12 @@ export default function App() {
                 <video src={videoBG} className="video-bg" autoPlay loop muted />
                 <FishTank fishes={fishes} setFishes={setFishes}/>
             </div>
+
+            {allFull && (
+                <div className='end-countdown'>
+                    To end: {timeToEnd} / 8
+                </div>
+            )}
         </div>
     )
 }
