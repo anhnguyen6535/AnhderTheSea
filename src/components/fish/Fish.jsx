@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import heart from "../../../public/heart.png";
+import heartBlank from "../../../public/heart_blank.png";
+import "./fish.css"
+import { getFishImage } from './FishHelper';
 
-export default function Fish({ top, left, feed=false }) {
+export default function Fish({id, top, left, feed= false, setFishes}) {
   const [leftPos, setLeft] = useState(left) 
-  const [direction, setDirection] = useState(1) 
+  const [direction, setDirection] = useState(1)
+  const [fishImg, setFishImg] = useState()
+
+  useEffect(() =>{
+    const img = getFishImage()
+    setFishImg(img.link)
+    setDirection(img.dir)
+  },[])
 
   // Fish Animation
   useEffect(() => {
@@ -15,8 +26,9 @@ export default function Fish({ top, left, feed=false }) {
         const newLeft = prevLeft + direction * 2 // move by 2px each frame
         // if the fish hits the right or left boundary, reverse direction
         if (newLeft + fishWidth >= screenWidth || newLeft <= 0) {
-          setDirection((prevDirection) => -prevDirection) 
+          setDirection((prevDirection) => -prevDirection)
         }
+
         return newLeft
       })
 
@@ -25,30 +37,29 @@ export default function Fish({ top, left, feed=false }) {
 
     animationFrameId = requestAnimationFrame(moveFish) // start anim
 
-    return () => cancelAnimationFrame(animationFrameId) 
-  }, [direction]); 
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [direction]);
+
+  // Update the parent state only when leftPos changes
+  useEffect(() => {
+    setFishes((prevFishes) =>
+      prevFishes.map((fish) =>
+        fish.id === id ? { ...fish, left: leftPos } : fish
+      )
+    );
+  }, [leftPos, id, setFishes]);
 
   return (
-    <div style={{ position: 'absolute', top: top, left: `${leftPos}px` }}>
+    <div className='fishDiv' style={{top: `${top}vh`, left: `${leftPos}px`}}>
       <img 
-        src={feed ? "./heart.png" : "./heart_blank.png"} 
-        style={{
-          width: '50px', 
-          height: 'auto',
-          position: 'absolute',
-          bottom: '100%', 
-          left: '25%', 
-        }} 
+        src={feed ? `${heart}` : `${heartBlank}`}
+        className="heart"
         alt="Health Bar"
       />
       <img 
-        src="./fish.png" 
-        style={{
-          width: '100px',
-          height: 'auto',
-          position: 'relative', 
-          transform: `scaleX(${direction})`, // flip horizontally
-        }}
+        src={fishImg}
+        className='fish-image'
+        style={{transform: `scaleX(${direction})`}} // flip horizontally
         alt="Fish"
       />
     </div>

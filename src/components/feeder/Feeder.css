@@ -1,0 +1,11 @@
+.feeder-wrapper {
+    height: 100%;
+}
+
+.feeder__btn {
+    height: 100%;
+    cursor: grab;
+    width: 100px;
+    border: none;
+    background: transparent;
+}

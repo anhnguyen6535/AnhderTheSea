@@ -1,28 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import Fish from './Fish';
+import { createRandomFish } from './FishHelper';
 
-const createRandomFish = (id) => ({
-  id,
-  top: Math.floor(Math.random() * 55) + 20 + 'vh',
-  left: Math.floor(Math.random() * 800),
-});
-
-export const FishTank = () => {
-  const [fishes, setFishes] = useState([]);
-
+export const FishTank = ({fishes, setFishes}) => {
   // Generate fish positions dynamically
   useEffect(() => {
-    const newFishes = Array.from({ length: 5 }, (_, index) =>
-      createRandomFish(index)
-    );
-    setFishes(newFishes);
+    const newFishes = createRandomFish()
+    setFishes(newFishes)
   }, []);
+
+  // optimize the rendering of fish components
+  const fishComponents = useMemo(() => {
+    return fishes.map((fish) => (
+      <Fish 
+        key={fish.id} 
+        id={fish.id} 
+        top={fish.top} 
+        left={fish.left} 
+        feed={fish.isColliding} 
+        setFishes={setFishes}
+      />
+    ));
+  }, [fishes,setFishes]); 
 
   return (
     <div>
-      {fishes.map((fish) => (
-        <Fish key={fish.id} top={fish.top} left={fish.left} />
-      ))}
+      {fishComponents}
     </div>
   );
 };

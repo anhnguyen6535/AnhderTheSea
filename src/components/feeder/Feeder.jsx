@@ -1,6 +1,10 @@
-import "./feeder.css"
+import "./Feeder.css"
 import {useEffect, useRef, useState, forwardRef} from "react";
 import FeederSVG from "./FeederSVG.jsx";
+import shakeSound from "../../../public/shake.mp3"
+
+// This is what I read for the dragging: https://javascript.info/mouse-drag-and-drop
+// It is the slider example at the bottom of the page
 
 const Feeder = forwardRef((props, ref) => {
     const {dropFood} = props
@@ -9,7 +13,7 @@ const Feeder = forwardRef((props, ref) => {
     const [isDragging, setIsDragging] = useState(false);
 
     // Tracks the x position of the shaker (the left edge of the shaker)
-    const [shakerLX, setShakerLX] = useState({ x: 0 });
+    const [shakerLX, setShakerLX] = useState(0);
 
     // Tracks where in the shaker the player clicked with respect to the left edge
     const [clickPosition, setClickPosition] = useState(0);
@@ -18,7 +22,7 @@ const Feeder = forwardRef((props, ref) => {
     const feederRef = useRef(null);
 
     // track dragging position
-    const [dragStart, setDragStart] = useState({ x: 0 });
+    const [dragStart, setDragStart] = useState(0);
 
     // check if the button is clicked
     const [isClick, setIsClick] = useState(false);
@@ -31,13 +35,13 @@ const Feeder = forwardRef((props, ref) => {
         setIsDragging(true);
 
         // event.clientX is the x positioning of the mouse click
-        // shakerLX.x is the position of the shaker currently (it is the left edge of the shaker)
+        // shakerLX is the position of the shaker currently (it is the left edge of the shaker)
         // Essentially this determines where in the shaker the player clicked
         // in respect to the left edge
-        setClickPosition(event.clientX - shakerLX.x);
+        setClickPosition(event.clientX - shakerLX);
 
         // drag starts where we click the mouse
-        setDragStart({ x: event.clientX });
+        setDragStart(event.clientX);
     };
 
     /**
@@ -65,16 +69,20 @@ const Feeder = forwardRef((props, ref) => {
             // if we take the newX which is the left edge of the button and add 100px we can get the right edge
             let rightEdge = newX + 100;
 
-            if (newX < 0) newX = 0; // Prevent going left
+            if (newX < 0) {
+                newX = 0; // Prevent going left
+            }
 
             // if the right edge becomes greater than the container's width we need to remove 100px
             // since the button is 100px
             // if the container is 1000px and the newX which is the left edge is 950px we know that
             // the right edge is 1050px and out of bounds
             // we can just set the left edge to the width of the container - 100 (the size of the button)
-            if (rightEdge > containerRect.width) newX = containerRect.width - 100;
+            if (rightEdge > containerRect.width) {
+                newX = containerRect.width - 100;
+            }
 
-            setShakerLX({ x: newX });
+            setShakerLX(newX);
         }
     };
 
@@ -84,7 +92,7 @@ const Feeder = forwardRef((props, ref) => {
     const handleMouseUp = (event) => {
         const epsilon = 5;
 
-        const delta = Math.abs(event.clientX - dragStart.x);
+        const delta = Math.abs(event.clientX - dragStart);
 
         // epsilon represents the threshold amount that needs to be dragged to consider it dragging
         // if greater it was not a click
@@ -93,6 +101,9 @@ const Feeder = forwardRef((props, ref) => {
         } else {
             setIsClick(true);
             dropFood();
+
+            // Drops food with shake sound effect
+            const shakeEffect = new Audio(shakeSound).play();
 
             // animation is 500ms so set click to false when animation is done (also prevents spamming button)
             setTimeout(() => {
@@ -131,7 +142,7 @@ const Feeder = forwardRef((props, ref) => {
                 ref = {ref}
                 className={`feeder__btn ${isClick ? 'feeder--ani' : ''}`}
                 onMouseDown={handleMouseDown}
-                style={{ transform: `translateX(${shakerLX.x}px)` }}
+                style={{ transform: `translateX(${shakerLX}px)` }}
             >
                 <FeederSVG />
             </button>
