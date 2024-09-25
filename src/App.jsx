@@ -5,6 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
 import popSound from "../public/ui-pop-up-1-197886.mp3"
+import videoBG from "../public/background3.mp4"
 
 export default function App() {
     const audioRef = useRef(null);
@@ -83,6 +84,7 @@ export default function App() {
                 <FeederGroup foods={foods} setFoods={setFoods}/>
             </div>
             <div className="scene__tank">
+                <video src={videoBG} className="video-bg" autoPlay loop muted />
                 <FishTank fishes={fishes} setFishes={setFishes}/>
             </div>
         </div>
