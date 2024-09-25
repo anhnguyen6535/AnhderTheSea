@@ -4,6 +4,7 @@ import {FishTank} from "./components/fish/FishTank.jsx";
 import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
+import popSound from "../public/ui-pop-up-1-197886.mp3"
 
 export default function App() {
     const audioRef = useRef(null);
@@ -55,6 +56,8 @@ export default function App() {
                         for (const food of foods) {
                             if (checkCollision(fish, food)) {
                                 collisionDetected = true;
+                                // Fish eat food with a pop sound
+                                const shakeEffect = new Audio(popSound).play();
                             } else {
                                 newFoods.push(food);
                             }
