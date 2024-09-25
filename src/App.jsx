@@ -79,6 +79,53 @@ export default function App() {
         detectCollisions();
     }, [foods]);
 
+
+    // Controls game loop
+    
+    const [allFull, setAllFull] = useState(false);
+    const timeoutRef = useRef(null);
+    const [timeToEnd, setTimeToEnd] = useState(8);
+
+    const allFed = () => fishes.every(fish => fish.isColliding === true);
+
+    useEffect(() => {
+        if (allFed()) {
+            setAllFull(true);
+        } else {
+            // if at some point the fish become hungry we cannot end
+            setAllFull(false);
+            setTimeToEnd(0);
+        }
+    }, [fishes]);
+
+
+    useEffect(() => {
+        let intervalRef;
+
+        if (allFull) {
+            // only make an interval if one does not yet exist (we don't want to make a bunch of them)
+            if (!intervalRef) {
+                intervalRef = setInterval(() => {
+                    // basically every second we can increment the time to end
+                    setTimeToEnd(prev => prev + 1);
+                }, 1000);
+            }
+        } else {
+            clearInterval(intervalRef); // we cannot end because not all the fish are full
+        }
+        return () => clearInterval(intervalRef);
+    }, [allFull]);
+
+    useEffect(() => {
+        if (timeToEnd >= 8) {
+            // make all fish hungry to restart the game
+            fishes.forEach(fish => {
+                fish.isColliding = false;
+            });
+            setTimeToEnd(0); // reset time
+        }
+    }, [timeToEnd]);
+
     return(
         <div className="scene">
             <audio src={bgMusic} ref={audioRef} loop />
