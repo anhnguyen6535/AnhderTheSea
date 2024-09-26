@@ -139,11 +139,9 @@ export default function App() {
                 <FishTank fishes={fishes} setFishes={setFishes}/>
             </div>
 
-            {allFull && (
-                <div className='end-countdown'>
-                    Reset: {timeToEnd} / 8
-                </div>
-            )}
+            <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>
+                Reset: {8 - timeToEnd}
+            </div>
         </div>
     )
 }

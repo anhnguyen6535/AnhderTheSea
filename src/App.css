@@ -17,6 +17,10 @@
 /*    height: auto; */
 /*}*/
 
+:root {
+    --spacing: 5px;
+}
+
 .scene {
     display: flex;
     flex-direction: column;
@@ -39,7 +43,7 @@
     background-size:cover;
     position: relative;
     z-index: 1;
-    border: 5px solid #333333;
+    border: var(--spacing) solid #333333;
 }
 
 /*.scene__tank::before {*/
@@ -67,9 +71,21 @@
     right: 0;
     z-index: 10;
     padding: 1rem;
-    font-size: 2vw;
     color: orangered;
     background: teal;
+    font-family: "Press Start 2P", "Arial Black", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: var(--spacing);
+    margin-right: var(--spacing);
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    border: 1px dashed orangered;
+}
+
+.end-countdown-ani{
+    opacity: 1;
+    transition: opacity 0.25s ease-in;
 }
 
 .dayNight-overlay {
