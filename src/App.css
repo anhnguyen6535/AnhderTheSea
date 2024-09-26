@@ -72,7 +72,7 @@
     z-index: 10;
     padding: 1rem;
     color: orangered;
-    background: teal;
+    background: rgba(0, 128, 128, 0.8);
     font-family: "Press Start 2P", "Arial Black", sans-serif;
     font-weight: 400;
     font-size: 2rem;
