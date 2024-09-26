@@ -129,6 +129,7 @@ export default function App() {
     return(
         <div className="scene">
             <audio src={bgMusic} ref={audioRef} loop />
+            <div className="dayNight-overlay" />
 
             <div className="scene__feeder">
                 <FeederGroup foods={foods} setFoods={setFoods}/>
