@@ -102,7 +102,7 @@
         background: rgba(255, 255, 255, 0.1); /* Very transparent white */
     }
     35% {
-        background: rgba(255, 200, 150, 0.2); /* Light orange sunrise */
+        background: rgba(255, 200, 150, 0.5); /* Light orange sunrise */
     }
     55% {
         background: rgba(100, 200, 250, 0.2); /* Blue regular day*/
