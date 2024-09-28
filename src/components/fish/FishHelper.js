@@ -3,11 +3,11 @@ const getRandomDirection = () => {
   };
   
 export const getFishImage = () => {
-    const id = Math.floor(Math.random() * 3)
-    const imgLinks = ["fish.png", "fish8.png", "fish4.png"] 
+    const id = Math.floor(Math.random() *  4)
+    const imgLinks = ["fish.png", "fish8f.png", "fish4.png", "fish8e.png"] 
     const dir = getRandomDirection()
 
-    return { link: imgLinks[id], dir: dir};
+    return { link: imgLinks[id], dir: dir, isPuffFish: id == 1};
 }
 
 export const createRandomFish = () => {

@@ -8,11 +8,13 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
   const [leftPos, setLeft] = useState(left) 
   const [direction, setDirection] = useState(1)
   const [fishImg, setFishImg] = useState()
+  const [fishSize, setFishSize] = useState('100px');
 
   useEffect(() =>{
     const img = getFishImage()
     setFishImg(img.link)
     setDirection(img.dir)
+    setFishSize(img.isPuffFish ? '85px' : '100px') 
   },[])
 
   // Fish Animation
@@ -59,7 +61,7 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
       <img 
         src={fishImg}
         className='fish-image'
-        style={{transform: `scaleX(${direction})`}} // flip horizontally
+        style={{transform: `scaleX(${direction})`, width: fishSize}} // flip horizontally
         alt="Fish"
       />
     </div>
