@@ -1,11 +1,13 @@
 import "./App.css";
 import FeederGroup from "./components/feeder/FeederGroup.jsx";
 import {FishTank} from "./components/fish/FishTank.jsx";
+import Paw from "./components/paw/Paw.jsx";
 import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
 import popSound from "../public/ui-pop-up-1-197886.mp3"
 import videoBG from "../public/background3.mp4"
+import hitSound from "../public/angry-cat-hq-sound-effect-240675.mp3"
 
 export default function App() {
     const audioRef = useRef(null);
@@ -15,6 +17,9 @@ export default function App() {
     // State for fish and food
     const [fishes, setFishes] = useState([]);
     let [foods, setFoods] = useState([])
+
+
+
 
     /**
      * Link to video I used to learn this: https://www.youtube.com/watch?v=r0sy-Cr6WHY
@@ -126,6 +131,24 @@ export default function App() {
         }
     }, [timeToEnd]);
 
+
+    const handlePawHit = (pawPos) => {
+        setFishes(prevFishes => {
+            return prevFishes.map(fish => {
+                // Reset fish in left third, right third, or bottom half
+                if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
+                    (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
+                    (pawPos === 'bottom' && fish.top > 50)) {
+                    return { ...fish, isColliding: false }; // Reset state
+                }
+                return fish;
+            });
+        });
+        new Audio(hitSound).play();
+    };
+
+
+
     return(
         <div className="scene">
             <audio src={bgMusic} ref={audioRef} loop />
@@ -143,6 +166,9 @@ export default function App() {
                     Reset: {timeToEnd} / 8
                 </div>
             )}
+
+            <Paw onHit={handlePawHit} /> {/* Pass the function here */}
+
         </div>
     )
 }
