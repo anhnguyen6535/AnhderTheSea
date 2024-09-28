@@ -12,6 +12,8 @@ export default function App() {
     const [isPlaying, setIsPlaying] = useState(false);
     useAudio(audioRef, isPlaying, setIsPlaying)
 
+    const [overlay, setOverlay] = useState(false)
+
     // State for fish and food
     const [fishes, setFishes] = useState([]);
     let [foods, setFoods] = useState([])
@@ -86,7 +88,7 @@ export default function App() {
     const timeoutRef = useRef(null);
     const [timeToEnd, setTimeToEnd] = useState(8);
 
-    const allFed = () => fishes.every(fish => fish.isColliding === true);
+    const allFed = () => fishes.length > 0 && fishes.every(fish => fish.isColliding === true);
 
     useEffect(() => {
         if (allFed()) {
@@ -97,12 +99,14 @@ export default function App() {
             setTimeToEnd(0);
         }
     }, [fishes]);
-
-
+    
+    
     useEffect(() => {
         let intervalRef;
-
+        
         if (allFull) {
+            console.log("here", allFull);
+            setOverlay(true)
             // only make an interval if one does not yet exist (we don't want to make a bunch of them)
             if (!intervalRef) {
                 intervalRef = setInterval(() => {
@@ -111,7 +115,9 @@ export default function App() {
                 }, 1000);
             }
         } else {
+            console.log("not full", allFull);
             clearInterval(intervalRef); // we cannot end because not all the fish are full
+            setOverlay(false)
         }
         return () => clearInterval(intervalRef);
     }, [allFull]);
@@ -129,6 +135,7 @@ export default function App() {
     return(
         <div className="scene">
             <audio src={bgMusic} ref={audioRef} loop />
+            <div className={overlay ? "dayNight-overlay" : ""} />
 
             <div className="scene__feeder">
                 <FeederGroup foods={foods} setFoods={setFoods}/>
@@ -138,11 +145,9 @@ export default function App() {
                 <FishTank fishes={fishes} setFishes={setFishes}/>
             </div>
 
-            {allFull && (
-                <div className='end-countdown'>
-                    Reset: {timeToEnd} / 8
-                </div>
-            )}
+            <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>
+                Reset: {8 - timeToEnd}
+            </div>
         </div>
     )
 }

@@ -17,6 +17,10 @@
 /*    height: auto; */
 /*}*/
 
+:root {
+    --spacing: 5px;
+}
+
 .scene {
     display: flex;
     flex-direction: column;
@@ -39,7 +43,7 @@
     background-size:cover;
     position: relative;
     z-index: 1;
-    border: 5px solid #333333;
+    border: var(--spacing) solid #333333;
 }
 
 /*.scene__tank::before {*/
@@ -67,7 +71,40 @@
     right: 0;
     z-index: 10;
     padding: 1rem;
-    font-size: 2vw;
     color: orangered;
-    background: teal;
+    background: rgba(0, 128, 128, 0.8);
+    font-family: "Press Start 2P", "Arial Black", sans-serif;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: var(--spacing);
+    margin-right: var(--spacing);
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+    border: 1px dashed orangered;
+}
+
+.end-countdown-ani{
+    opacity: 1;
+    transition: opacity 0.25s ease-in;
+}
+
+.dayNight-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    animation: dayNight 8s infinite; /* Sync with music track which is 38 seconds */
+    pointer-events: none;
+    mix-blend-mode: multiply;
+}
+
+@keyframes dayNight{
+    0% {
+        background: rgba(255, 200, 150, 0.5); /* Light orange sunrise */
+    }
+    80% {
+        background: rgba(51, 51, 51, 0.7); /* night */
+    }
+    100% {
+        background: rgba(255, 255, 255, 0.1); /* loop back to 0% */
+    }
 }
