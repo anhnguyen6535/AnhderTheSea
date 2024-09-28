@@ -15,7 +15,7 @@ export const createRandomFish = () => {
   const newFishes = []
 
   // 15 is max num where each fish has its own space
-  for (let i =0; i < 10; i++){
+  for (let i =0; i < 2; i++){
     let top, left
     let isTooClose
     let attempts = 0
