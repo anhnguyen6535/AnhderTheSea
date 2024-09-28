@@ -92,22 +92,16 @@
     position: absolute;
     inset: 0;
     z-index: 8;
-    animation: dayNight 38s infinite; /* Sync with music track which is 38 seconds */
+    animation: dayNight 8s infinite; /* Sync with music track which is 38 seconds */
     pointer-events: none;
     mix-blend-mode: multiply;
 }
 
 @keyframes dayNight{
     0% {
-        background: rgba(255, 255, 255, 0.1); /* Very transparent white */
-    }
-    35% {
         background: rgba(255, 200, 150, 0.5); /* Light orange sunrise */
     }
-    55% {
-        background: rgba(100, 200, 250, 0.2); /* Blue regular day*/
-    }
-    90% {
+    80% {
         background: rgba(51, 51, 51, 0.7); /* night */
     }
     100% {
