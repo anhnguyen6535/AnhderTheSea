@@ -7,7 +7,7 @@ import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
 import popSound from "../public/ui-pop-up-1-197886.mp3"
 import videoBG from "../public/background3.mp4"
-import hitSound from "../public/angry-cat-hq-sound-effect-240675.mp3"
+import hitSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
 
 export default function App() {
     const audioRef = useRef(null);
@@ -139,6 +139,8 @@ export default function App() {
 
 
     const handlePawHit = (pawPos) => {
+        console.log("handle paw hit");
+        new Audio(hitSound).play();
         setFishes(prevFishes => {
             return prevFishes.map(fish => {
                 // Reset fish in left third, right third, or bottom half
@@ -150,7 +152,6 @@ export default function App() {
                 return fish;
             });
         });
-        new Audio(hitSound).play();
     };
 
 
