@@ -11,6 +11,7 @@
     /* width: 100px; */
     height: auto;
     position: relative;
+    transition: filter 0.5s ease;
 }
 
 .fishDiv {
@@ -20,6 +21,28 @@
     -webkit-user-drag: none;
 }
 
+@keyframes shakeFish {
+    0% {
+        transform: translateY(0);
+    }
+    25% {
+        transform: translateY(-5px);
+    }
+    50% {
+        transform: translateY(5px);
+    }
+    75% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
 .attacked {
-    filter: brightness(0.5);
+    filter: brightness(0.5) sepia(1) hue-rotate(-50deg) saturate(5);
+}
+
+.attack-animate {
+    animation: shakeFish 0.5s ease-in-out;
 }

@@ -53,7 +53,7 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
 
 
   return (
-    <div className='fishDiv' style={{top: `${top}vh`, left: `${leftPos}px`}}>
+    <div className={`fishDiv ${attacked ? 'attack-animate' : ''}`} style={{top: `${top}vh`, left: `${leftPos}px`}}>
       <img
         src={feed ? `${heart}` : `${heartBlank}`}
         className="heart"
