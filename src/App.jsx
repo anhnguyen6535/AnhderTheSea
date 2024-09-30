@@ -13,7 +13,6 @@ import eatSound from "../public/level-up-191997.mp3"
 export default function App() {
     const [hitAud] = useState(() => new Audio(hitSound))
     const [catAud] = useState(() => new Audio(catSound))
-    const [eatAud] = useState(() => new Audio(eatSound))
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     useAudio(audioRef, isPlaying, setIsPlaying)
@@ -71,7 +70,7 @@ export default function App() {
                                 setFoods(newFoods);
 
                                 // Fish eat food with a sound
-                                playAudio(eatAud, 0.8)
+                                playAudio(new Audio(eatSound), 0.5)
 
                                 // no need to check the other food for this fish it has eaten
                                 break;

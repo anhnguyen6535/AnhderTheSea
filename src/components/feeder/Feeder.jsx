@@ -8,7 +8,6 @@ import { playAudio } from "../../hooks/useAudio.js";
 // It is the slider example at the bottom of the page
 
 const Feeder = forwardRef((props, ref) => {
-    const [shakeAud] = useState(() => new Audio(shakeSound))
     const {dropFood} = props
 
     // Checks if player is dragging the shaker
@@ -106,7 +105,7 @@ const Feeder = forwardRef((props, ref) => {
 
             // Drops food with shake sound effect
             // const shakeEffect = new Audio(shakeSound).play();
-            playAudio(shakeAud, 0.5)
+            playAudio(new Audio(shakeSound), 0.8)
 
             // animation is 500ms so set click to false when animation is done (also prevents spamming button)
             setTimeout(() => {
