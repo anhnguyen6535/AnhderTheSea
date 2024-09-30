@@ -71,10 +71,10 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
       />
       <img
         src={fishImg}
-        // className={`fish-image ${attacked ? 'attacked' : ''} `}
-        className='fish-image'
+        className={`fish-image ${isAttacked ? 'attacked' : ''} `}
+        // className='fish-image'
         style={{transform: `scaleX(${direction})`,
-          filter: isAttacked ? 'brightness(0.5) invert(1)' : 'none',
+          // filter: isAttacked ? 'brightness(0.5)' : 'none',
           width: fishSize}} // flip horizontally
         alt="Fish"
       />
