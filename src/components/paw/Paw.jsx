@@ -178,7 +178,13 @@ export default function Paw({ onHit, clicked }) {
     if (state === "invisible") return null;
 
     return (
-        <div className="catPawDiv" style={finalPositionStyles} onClick={handlePawClick}>
+        <div 
+            className="catPawDiv" 
+            style={finalPositionStyles} 
+            onClick={handlePawClick} 
+            onPointerEnter = {() => document.body.style.cursor = 'pointer'}
+            onPointerLeave = {() => document.body.style.cursor = 'default'}
+        >
             <img
                 src={paw}
                 className={`cat-paw-image ${isShaking ? "shake" : ""}`}
