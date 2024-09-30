@@ -5,11 +5,13 @@ import Paw from "./components/paw/Paw.jsx";
 import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
-import popSound from "../public/ui-pop-up-1-197886.mp3"
 import videoBG from "../public/background3.mp4"
-import hitSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
+import hitSound from "../public/Punch Sound.mp3"
+import catSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
+import eatSound from "../public/level-up-191997.mp3"
 
 export default function App() {
+    const [hitAud] = useState(() => new Audio(hitSound))
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     useAudio(audioRef, isPlaying, setIsPlaying)
@@ -66,8 +68,8 @@ export default function App() {
                                 newFoods.splice(i, 1); // remove the food right away so it doesn't collide with another fish
                                 setFoods(newFoods);
 
-                                // Fish eat food with a pop sound
-                                const shakeEffect = new Audio(popSound).play();
+                                // Fish eat food with a sound
+                                const eatEffect = new Audio(eatSound).play();
 
                                 // no need to check the other food for this fish it has eaten
                                 break;
@@ -139,24 +141,29 @@ export default function App() {
         console.log("handle paw click");
 
         if (isPlaying) {
-            new Audio(hitSound).play();
+            new Audio(catSound).play();
         }
     }
 
-
     const handlePawHit = (pawPos) => {
         console.log("handle paw hit");
-        setFishes(prevFishes => {
-            return prevFishes.map(fish => {
-                // Reset fish in left third, right third, or bottom half
-                if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
-                    (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
-                    (pawPos === 'bottom' && fish.top > 50)) {
-                    return { ...fish, isColliding: false }; // Reset state
-                }
-                return fish;
+        hitAud.volume = 0.5
+        hitAud.play();
+
+        setTimeout(() =>{
+            setFishes(prevFishes => {
+                return prevFishes.map(fish => {
+                    // Reset fish in left third, right third, or bottom half
+                    if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
+                        (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
+                        (pawPos === 'bottom' && fish.top > 50)) {
+                        return { ...fish, isColliding: false }; // Reset state
+                    }
+                    return fish;
+                });
             });
-        });
+
+        }, 500)
     };
 
     return(
