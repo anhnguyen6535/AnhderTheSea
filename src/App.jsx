@@ -4,7 +4,7 @@ import {FishTank} from "./components/fish/FishTank.jsx";
 import Paw from "./components/paw/Paw.jsx";
 import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
-import { useAudio } from "./hooks/useAudio.js";
+import { playAudio, useAudio } from "./hooks/useAudio.js";
 import videoBG from "../public/background3.mp4"
 import hitSound from "../public/Punch Sound.mp3"
 import catSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
@@ -12,6 +12,8 @@ import eatSound from "../public/level-up-191997.mp3"
 
 export default function App() {
     const [hitAud] = useState(() => new Audio(hitSound))
+    const [catAud] = useState(() => new Audio(catSound))
+    const [eatAud] = useState(() => new Audio(eatSound))
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     useAudio(audioRef, isPlaying, setIsPlaying)
@@ -69,7 +71,7 @@ export default function App() {
                                 setFoods(newFoods);
 
                                 // Fish eat food with a sound
-                                const eatEffect = new Audio(eatSound).play();
+                                playAudio(eatAud, 0.8)
 
                                 // no need to check the other food for this fish it has eaten
                                 break;
@@ -141,14 +143,15 @@ export default function App() {
         console.log("handle paw click");
 
         if (isPlaying) {
-            new Audio(catSound).play();
+            playAudio(catAud, 0.5)
         }
     }
 
     const handlePawHit = (pawPos) => {
         console.log("handle paw hit");
-        hitAud.volume = 0.5
-        hitAud.play();
+        if (!audioRef.current.paused) {
+            playAudio(hitAud, 0.5)
+        }
 
         setTimeout(() =>{
             setFishes(prevFishes => {
