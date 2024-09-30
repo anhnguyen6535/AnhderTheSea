@@ -53,7 +53,7 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
 
 
   return (
-    <div className={`fishDiv ${attacked ? 'attack-animate' : ''}`} style={{top: `${top}vh`, left: `${leftPos}px`}}>
+    <div className={`fishDiv ${(attacked && feed) ? 'attack-animate' : ''}`} style={{top: `${top}vh`, left: `${leftPos}px`}}>
       <img
         src={feed ? `${heart}` : `${heartBlank}`}
         className="heart"
@@ -61,7 +61,7 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
       />
       <img
         src={fishImg}
-        className={`fish-image ${attacked ? 'attacked' : ''} `}
+        className={`fish-image ${(attacked && feed) ? 'attacked' : ''} `}
         style={{transform: `scaleX(${direction})`,
           width: fishSize}} // flip horizontally
         alt="Fish"

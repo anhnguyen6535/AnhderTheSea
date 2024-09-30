@@ -160,12 +160,12 @@ export default function App() {
                         (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
                         (pawPos === 'bottom' && fish.top > 50)) {
 
-                        const newFish = { ...fish, isColliding: false , isAttacked: true};
+                        const newFish = { ...fish, isAttacked: true};
 
                         setTimeout(() => {
                             setFishes((prevFishes) =>
                                 prevFishes.map((f) =>
-                                    f.id === fish.id ? { ...f, isAttacked: false } : f
+                                    f.id === fish.id ? { ...f, isAttacked: false, isColliding: false } : f
                                 )
                             );
                         }, 2000);
