@@ -151,8 +151,8 @@ export default function App() {
             setFishes(prevFishes => {
                 return prevFishes.map(fish => {
                     // Reset fish in left third, right third, or bottom half
-                    if ((pawPos === 'left' && fish.left < window.innerWidth * .15) ||
-                        (pawPos === 'right' && fish.left > (window.innerWidth * .80)) ||
+                    if ((pawPos === 'left' && fish.left < window.innerWidth * .33) ||
+                        (pawPos === 'right' && fish.left > (window.innerWidth * .66)) ||
                         (pawPos === 'bottom' && fish.top > 50)) {
 
                         const newFish = { ...fish, isAttacked: true};
