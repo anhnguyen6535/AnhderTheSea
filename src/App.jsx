@@ -10,6 +10,7 @@ import videoBG from "../public/background3.mp4"
 import hitSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
 
 export default function App() {
+    const [hitAud] = useState(() => new Audio(hitSound))
     const audioRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
     useAudio(audioRef, isPlaying, setIsPlaying)
@@ -138,7 +139,8 @@ export default function App() {
     const handlePawHit = (pawPos) => {
         console.log("handle paw hit");
         if (isPlaying) {
-            new Audio(hitSound).play();
+            hitAud.volume = 0.3
+            hitAud.play();
         }
         setFishes(prevFishes => {
             return prevFishes.map(fish => {
