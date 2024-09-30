@@ -11,7 +11,7 @@ export default function Paw({ onHit }) {
         finalStyles: {},
     })
 
-    const positions = ['right'];
+    const positions = ['left', 'right', 'bottom'];
 
     // Define baseStyles outside of useEffect
     const baseStyles = {
@@ -22,7 +22,7 @@ export default function Paw({ onHit }) {
     // Function to get a random paw position
     const getPawPosition = () => {
         const randomIndex = Math.floor(Math.random() * positions.length);
-        return positions[0];
+        return positions[randomIndex];
     };
 
     const feederHeight = 150;
