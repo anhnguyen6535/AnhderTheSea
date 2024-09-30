@@ -168,7 +168,7 @@ export default function App() {
                                     f.id === fish.id ? { ...f, isAttacked: false, isColliding: false } : f
                                 )
                             );
-                        }, 2000);
+                        }, 1000);
                         return newFish;
                     }
                     return fish;
