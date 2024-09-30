@@ -1,10 +1,14 @@
 .catPawDiv {
     z-index: 100;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 .cat-paw-image {
     width: 150px;
     height: auto;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 @keyframes shakePaw {

@@ -36,7 +36,7 @@ export const createRandomFish = () => {
     }while(isTooClose && attempts < maxAttempts)
 
 
-    newFishes.push({id: i, top, left, isColliding: false})
+    newFishes.push({id: i, top, left, isColliding: false, isAttacked: false});
   }
   return newFishes
 }

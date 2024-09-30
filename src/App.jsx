@@ -110,7 +110,6 @@ export default function App() {
         let intervalRef;
         
         if (allFull) {
-            console.log("here", allFull);
             setOverlay(true)
             // only make an interval if one does not yet exist (we don't want to make a bunch of them)
             if (!intervalRef) {
@@ -120,7 +119,6 @@ export default function App() {
                 }, 1000);
             }
         } else {
-            console.log("not full", allFull);
             clearInterval(intervalRef); // we cannot end because not all the fish are full
             setOverlay(false)
         }
@@ -139,15 +137,12 @@ export default function App() {
 
 
     const handlePawClick = () => {
-        console.log("handle paw click");
-
         if (isPlaying) {
             playAudio(catAud, 0.5)
         }
     }
 
     const handlePawHit = (pawPos) => {
-        console.log("handle paw hit");
         if (!audioRef.current.paused) {
             playAudio(hitAud, 0.5)
         }
@@ -156,10 +151,20 @@ export default function App() {
             setFishes(prevFishes => {
                 return prevFishes.map(fish => {
                     // Reset fish in left third, right third, or bottom half
-                    if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
-                        (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
+                    if ((pawPos === 'left' && fish.left < window.innerWidth * .33) ||
+                        (pawPos === 'right' && fish.left > (window.innerWidth * .66)) ||
                         (pawPos === 'bottom' && fish.top > 50)) {
-                        return { ...fish, isColliding: false }; // Reset state
+
+                        const newFish = { ...fish, isAttacked: true};
+
+                        setTimeout(() => {
+                            setFishes((prevFishes) =>
+                                prevFishes.map((f) =>
+                                    f.id === fish.id ? { ...f, isAttacked: false, isColliding: false } : f
+                                )
+                            );
+                        }, 950);
+                        return newFish;
                     }
                     return fish;
                 });
@@ -178,7 +183,7 @@ export default function App() {
             </div>
             <div className="scene__tank">
                 <video src={videoBG} className="video-bg" autoPlay loop muted />
-                <FishTank fishes={fishes} setFishes={setFishes}/>
+                <FishTank fishes={fishes} setFishes={setFishes  }/>
                 <Paw onHit={handlePawHit} clicked={handlePawClick} />
             </div>
             <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>

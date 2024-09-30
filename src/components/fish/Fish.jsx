@@ -4,8 +4,8 @@ import heartBlank from "../../../public/heart_blank.png";
 import "./fish.css"
 import { getFishImage } from './FishHelper';
 
-export default function Fish({id, top, left, feed= false, setFishes}) {
-  const [leftPos, setLeft] = useState(left) 
+export default function Fish({id, top, left, feed= false, setFishes, attacked = false}) {
+  const [leftPos, setLeft] = useState(left)
   const [direction, setDirection] = useState(1)
   const [fishImg, setFishImg] = useState()
   const [fishSize, setFishSize] = useState('100px');
@@ -14,7 +14,7 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
     const img = getFishImage()
     setFishImg(img.link)
     setDirection(img.dir)
-    setFishSize(img.isPuffFish ? '85px' : '100px') 
+    setFishSize(img.isPuffFish ? '85px' : '100px')
   },[])
 
   // Fish Animation
@@ -51,17 +51,19 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
     );
   }, [leftPos, id, setFishes]);
 
+
   return (
-    <div className='fishDiv' style={{top: `${top}vh`, left: `${leftPos}px`}}>
-      <img 
+    <div className={`fishDiv ${(attacked && feed) ? 'attack-animate' : ''}`} style={{top: `${top}vh`, left: `${leftPos}px`}}>
+      <img
         src={feed ? `${heart}` : `${heartBlank}`}
         className="heart"
         alt="Health Bar"
       />
-      <img 
+      <img
         src={fishImg}
-        className='fish-image'
-        style={{transform: `scaleX(${direction})`, width: fishSize}} // flip horizontally
+        className={`fish-image ${(attacked && feed) ? 'attacked' : ''} `}
+        style={{transform: `scaleX(${direction})`,
+          width: fishSize}} // flip horizontally
         alt="Fish"
       />
     </div>

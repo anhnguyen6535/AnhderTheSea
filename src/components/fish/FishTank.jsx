@@ -19,6 +19,7 @@ export const FishTank = ({fishes, setFishes}) => {
         left={fish.left} 
         feed={fish.isColliding} 
         setFishes={setFishes}
+        attacked={fish.isAttacked}
       />
     ));
   }, [fishes,setFishes]); 
