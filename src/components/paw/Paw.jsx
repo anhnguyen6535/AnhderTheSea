@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import paw from "../../../public/paw.png";
 import "./paw.css";
 
@@ -6,13 +6,12 @@ export default function Paw({ onHit }) {
     const [state, setState] = useState("invisible"); // State can be 'invisible', 'entering', or 'exiting'
     const [finalPositionStyles, setFinalPositionStyles] = useState({}); // Final position when visible
     const [pawPos, setPawPos] = useState(''); // Track the current position
+    const [styles, setStyles] = useState({
+        initialStyles: {},
+        finalStyles: {},
+    })
 
-    const positions = ['left', 'right', 'bottom'];
-
-    const getPawPosition = () => {
-        const randomIndex = Math.floor(Math.random() * positions.length);
-        return positions[randomIndex];
-    };
+    const positions = ['right'];
 
     // Define baseStyles outside of useEffect
     const baseStyles = {
@@ -20,154 +19,147 @@ export default function Paw({ onHit }) {
         transition: 'all 3s ease-in-out',
     };
 
+    // Function to get a random paw position
+    const getPawPosition = () => {
+        const randomIndex = Math.floor(Math.random() * positions.length);
+        return positions[0];
+    };
+
+    const feederHeight = 150;
+    const pawHeight = 150;
+    const rotationHeight = 150; // since the image was rotated the center is shifted down 75px
+
+    const minTop = -rotationHeight; // shifting down the center need to reshift it up with respect to the tank
+    const maxTop = window.innerHeight - pawHeight - feederHeight - rotationHeight; // the max top value
+
+    const getStyles = (position) => {
+        let initialStyles = {};
+        let finalStyles = {};
+
+        switch (position) {
+            case 'left':
+                const leftTop = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
+                initialStyles = {
+                    left: '-400px',
+                    top: `${leftTop}px`,
+                    transform: 'rotate(90deg)',
+                };
+                finalStyles = {
+                    left: '20px',
+                    top: `${leftTop}px`,
+                    transform: 'rotate(90deg)',
+                };
+                break;
+
+            case 'right':
+                const rightTop = Math.floor(Math.random() * (maxTop - minTop + 1)) + minTop;
+                initialStyles = {
+                    left: 'auto',
+                    right: '-400px',
+                    top: `${rightTop}px`,
+                    // top: `-75px`,
+                    transform: 'rotate(-90deg)',
+                };
+                finalStyles = {
+                    left: 'auto',
+                    right: '0',
+                    top: `${rightTop}px`,
+                    // top: `-75px`,
+                    transform: 'rotate(-90deg)',
+                };
+                break;
+
+            case 'bottom':
+                // Random gives a number between 0 inclusive and 1 exclusive
+                // We get the width of the window and subtract the width of the cat paw
+                // We get a random number between 0 and the window width - the cat paw to use as the start
+                // of the cat paw
+                const bottomLeft = Math.floor(Math.random() * (window.innerWidth - 175));
+                initialStyles = {
+                    left: `${bottomLeft}px`,
+                    bottom: '-400px',
+                    transform: 'rotate(0deg)',
+                };
+                finalStyles = {
+                    left: `${bottomLeft}px`,
+                    bottom: '-20px',
+                    transform: 'rotate(0deg)',
+                };
+                break;
+
+            default:
+                break;
+        }
+
+        return { initialStyles, finalStyles };
+    };
+
+    // Enter
+    const entering = () => {
+
+        // Apply initial off-screen styles and make visible
+        setFinalPositionStyles({ ...baseStyles, ...styles.initialStyles });
+
+        // After a short delay, set to the final position (entry animation)
+        const entryTimeout = setTimeout(() => {
+            setFinalPositionStyles((prev) => ({ ...prev, ...styles.finalStyles }));
+        }, 1000);
+
+        // Trigger onHit callback
+        const enteredTimeout = setTimeout(() => {
+            onHit(pawPos);
+        }, 4000);
+
+        // Set up the exit state to trigger after 1 second of being fully visible
+        const exitTimeout = setTimeout(() => {
+            setState("exiting");
+        }, 5000);
+
+        return () => {
+            clearTimeout(entryTimeout);
+            clearTimeout(enteredTimeout);
+            clearTimeout(exitTimeout);
+        };
+    };
+
+    // exit
+    const exiting = () => {
+        // Move back off-screen
+        setFinalPositionStyles((prev) => ({ ...baseStyles, ...styles.initialStyles }));
+
+        // After exiting is done, set to invisible
+        const invisibleTimeout = setTimeout(() => {
+            setState("invisible");
+        }, 4000); // Duration of exit transition
+
+        return () => {
+            clearTimeout(invisibleTimeout);
+        };
+    };
+
     useEffect(() => {
         if (state === "invisible") {
-            setPawPos(getPawPosition());
+            const newPosition = getPawPosition();
+            setPawPos(newPosition);
+
+            const { initialStyles, finalStyles } = getStyles(newPosition);
+            setStyles({ initialStyles, finalStyles });
+
             setState("entering");
         }
 
         if (state === "entering") {
-            let initialStyles = {};
-            let finalStyles = {};
-
-            switch (pawPos) {
-                case 'left':
-                    initialStyles = {
-                        left: '-400px',
-                        right: 'auto',
-                        top: '50%',
-                        bottom: 'auto',
-                        transform: 'translateY(-50%) rotate(90deg)',
-                    };
-                    finalStyles = {
-                        left: '20px',
-                        right: 'auto',
-                        top: '50%',
-                        bottom: 'auto',
-                        transform: 'translateY(-50%) rotate(90deg)',
-                    };
-                    break;
-
-                case 'right':
-                    initialStyles = {
-                        left: 'auto',
-                        right: '-400px',
-                        top: '50%',
-                        bottom: 'auto',
-                        transform: 'translateY(-50%) rotate(-90deg)',
-                    };
-                    finalStyles = {
-                        left: 'auto',
-                        right: '0',
-                        top: '50%',
-                        bottom: 'auto',
-                        transform: 'translateY(-50%) rotate(-90deg)',
-                    };
-                    break;
-
-                case 'bottom':
-                    initialStyles = {
-                        left: '50%',
-                        right: 'auto',
-                        top: 'auto',
-                        bottom: '-400px',
-                        transform: 'translateX(-50%) rotate(0deg)',
-                    };
-                    finalStyles = {
-                        left: '50%',
-                        right: 'auto',
-                        top: 'auto',
-                        bottom: '-20px',
-                        transform: 'translateX(-50%) rotate(0deg)',
-                    };
-                    break;
-
-                default:
-                    break;
-            }
-
-            // Apply initial off-screen styles and make visible
-            setFinalPositionStyles({ ...baseStyles, ...initialStyles });
-
-            // After a short delay, set to the final position (entry animation)
-            const entryTimeout = setTimeout(() => {
-                setFinalPositionStyles((prev) => ({ ...prev, ...finalStyles }));
-            }, 1000); // Short delay for the effect
-
-            const enteredTimeout = setTimeout(() => {
-                onHit(pawPos);
-            }, 4000);
-
-            // Set up the exit state to trigger after 1 second of being fully visible
-            const exitTimeout = setTimeout(() => {
-                setState("exiting");
-            }, 5000); // Exit after 1 second of being visible
-
-            // Cleanup timeouts
-            return () => {
-                clearTimeout(entryTimeout);
-                clearTimeout(enteredTimeout);
-                clearTimeout(exitTimeout);
-            };
+            return entering();
         }
 
         if (state === "exiting") {
-            let initialStyles = {};
-
-            switch (pawPos) {
-                case 'left':
-                    initialStyles = {
-                        left: '-400px',
-                        right: 'auto',
-                        top: '50%',
-                        bottom: 'auto',
-                        transform: 'translateY(-50%) rotate(90deg)',
-                    };
-                    break;
-
-                case 'right':
-                    initialStyles = {
-                        left: 'auto',
-                        right: '-400px',
-                        top: '50%',
-                        bottom: 'auto',
-                        transform: 'translateY(-50%) rotate(-90deg)',
-                    };
-                    break;
-
-                case 'bottom':
-                    initialStyles = {
-                        left: '50%',
-                        right: 'auto',
-                        top: 'auto',
-                        bottom: '-400px',
-                        transform: 'translateX(-50%) rotate(0deg)',
-                    };
-                    break;
-
-                default:
-                    break;
-            }
-
-            // Move back off-screen
-            setFinalPositionStyles((prev) => ({ ...baseStyles, ...initialStyles }));
-
-            // After exiting is done, set to invisible
-            const invisibleTimeout = setTimeout(() => {
-                setState("invisible");
-            }, 4000); // Duration of exit transition
-
-            // Cleanup timeout
-            return () => {
-                clearTimeout(invisibleTimeout);
-            };
+            return exiting();
         }
-    }, [state, pawPos]);
+    }, [state, pawPos, styles]);
 
     // Handle paw click for immediate exit
     const handlePawClick = () => {
         if (state === "entering") {
-            // Immediately trigger exit if clicked while entering
             setState("exiting");
         }
     };
@@ -175,11 +167,9 @@ export default function Paw({ onHit }) {
     // If the paw isn't visible, don't render it
     if (state === "invisible") return null;
 
-
     return (
         <div className="catPawDiv" style={finalPositionStyles} onClick={handlePawClick}>
             <img src={paw} className="cat-paw-image" alt="Cat Paw" />
         </div>
     );
-
 }

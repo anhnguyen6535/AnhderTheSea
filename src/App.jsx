@@ -20,9 +20,6 @@ export default function App() {
     const [fishes, setFishes] = useState([]);
     let [foods, setFoods] = useState([])
 
-
-
-
     /**
      * Link to video I used to learn this: https://www.youtube.com/watch?v=r0sy-Cr6WHY
      * Collision logic, detects collision based on hitbox. Each fish and food is a box.
@@ -140,7 +137,9 @@ export default function App() {
 
     const handlePawHit = (pawPos) => {
         console.log("handle paw hit");
-        new Audio(hitSound).play();
+        if (isPlaying) {
+            new Audio(hitSound).play();
+        }
         setFishes(prevFishes => {
             return prevFishes.map(fish => {
                 // Reset fish in left third, right third, or bottom half
@@ -154,8 +153,6 @@ export default function App() {
         });
     };
 
-
-
     return(
         <div className="scene">
             <audio src={bgMusic} ref={audioRef} loop />
@@ -167,12 +164,11 @@ export default function App() {
             <div className="scene__tank">
                 <video src={videoBG} className="video-bg" autoPlay loop muted />
                 <FishTank fishes={fishes} setFishes={setFishes}/>
+                <Paw onHit={handlePawHit} /> {/* Pass the function here */}
             </div>
             <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>
                 Reset: {8 - timeToEnd}
             </div>
-
-            <Paw onHit={handlePawHit} /> {/* Pass the function here */}
         </div>
     )
 }

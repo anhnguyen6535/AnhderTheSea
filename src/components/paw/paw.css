@@ -1,9 +1,8 @@
 .catPawDiv {
-    z-index: 100; /* Ensure it's above other elements */
+    z-index: 100;
 }
 
 .cat-paw-image {
     width: 150px;
     height: auto;
-    /*transition: transform 0.2s ease; !* For smooth entrance *!*/
 }
