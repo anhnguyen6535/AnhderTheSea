@@ -2,6 +2,7 @@ import "./Feeder.css"
 import {useEffect, useRef, useState, forwardRef} from "react";
 import FeederSVG from "./FeederSVG.jsx";
 import shakeSound from "../../../public/shake.mp3"
+import { playAudio } from "../../hooks/useAudio.js";
 
 // This is what I read for the dragging: https://javascript.info/mouse-drag-and-drop
 // It is the slider example at the bottom of the page
@@ -103,7 +104,8 @@ const Feeder = forwardRef((props, ref) => {
             dropFood();
 
             // Drops food with shake sound effect
-            const shakeEffect = new Audio(shakeSound).play();
+            // const shakeEffect = new Audio(shakeSound).play();
+            playAudio(new Audio(shakeSound), 0.8)
 
             // animation is 500ms so set click to false when animation is done (also prevents spamming button)
             setTimeout(() => {

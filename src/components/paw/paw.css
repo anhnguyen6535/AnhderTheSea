@@ -1,0 +1,31 @@
+.catPawDiv {
+    z-index: 100;
+}
+
+.cat-paw-image {
+    width: 150px;
+    height: auto;
+}
+
+@keyframes shakePaw {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-50px);
+    }
+    50% {
+        transform: translateX(50px);
+    }
+    75% {
+        transform: translateX(-50px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.shake {
+    animation: shakePaw 0.5s ease-in-out;
+    filter: sepia(1) hue-rotate(-50deg) saturate(5);
+}

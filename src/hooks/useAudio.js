@@ -6,7 +6,7 @@ export function useAudio(audioRef, isPlaying, setIsPlaying){
         const handleClick = () => {
             if(!isPlaying){
                 setIsPlaying(true);
-                audioRef.current.play();
+                playAudio(audioRef.current, 0.5)
             }
         };
 
@@ -15,4 +15,9 @@ export function useAudio(audioRef, isPlaying, setIsPlaying){
             window.removeEventListener('click', handleClick);
         };
     }, [isPlaying]);
+}
+
+export function playAudio(audio, volume){
+    audio.volume = volume
+    audio.play();
 }
