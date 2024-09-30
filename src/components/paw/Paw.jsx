@@ -157,10 +157,19 @@ export default function Paw({ onHit }) {
         }
     }, [state, pawPos, styles]);
 
+    const [isShaking, setIsShaking] = useState(false);
+
     // Handle paw click for immediate exit
     const handlePawClick = () => {
         if (state === "entering") {
             setState("exiting");
+
+            setIsShaking(true);
+
+            // set shaking to false when the animation ends
+            setTimeout(() => {
+                setIsShaking(false);
+            }, 500); // remove at same duration as animation
         }
     };
 
@@ -169,7 +178,11 @@ export default function Paw({ onHit }) {
 
     return (
         <div className="catPawDiv" style={finalPositionStyles} onClick={handlePawClick}>
-            <img src={paw} className="cat-paw-image" alt="Cat Paw" />
+            <img
+                src={paw}
+                className={`cat-paw-image ${isShaking ? "shake" : ""}`}
+                alt="Cat Paw"
+            />
         </div>
     );
 }
