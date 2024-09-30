@@ -105,10 +105,10 @@ export default function Paw({ onHit }) {
             setFinalPositionStyles((prev) => ({ ...prev, ...styles.finalStyles }));
         }, 1000);
 
-        // Trigger onHit callback
-        const enteredTimeout = setTimeout(() => {
-            onHit(pawPos);
-        }, 4000);
+        // // Trigger onHit callback
+        // const enteredTimeout = setTimeout(() => {
+        //     onHit(pawPos);
+        // }, 4000);
 
         // Set up the exit state to trigger after 1 second of being fully visible
         const exitTimeout = setTimeout(() => {
@@ -117,7 +117,7 @@ export default function Paw({ onHit }) {
 
         return () => {
             clearTimeout(entryTimeout);
-            clearTimeout(enteredTimeout);
+            // clearTimeout(enteredTimeout);
             clearTimeout(exitTimeout);
         };
     };
@@ -160,6 +160,7 @@ export default function Paw({ onHit }) {
     // Handle paw click for immediate exit
     const handlePawClick = () => {
         if (state === "entering") {
+            onHit(pawPos);
             setState("exiting");
         }
     };
