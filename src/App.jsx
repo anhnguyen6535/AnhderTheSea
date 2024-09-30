@@ -159,7 +159,8 @@ export default function App() {
                     if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
                         (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
                         (pawPos === 'bottom' && fish.top > 50)) {
-                        return { ...fish, isColliding: false }; // Reset state
+
+                        return { ...fish, isColliding: false , isAttacked: true}; // Reset state
                     }
                     return fish;
                 });
@@ -178,7 +179,7 @@ export default function App() {
             </div>
             <div className="scene__tank">
                 <video src={videoBG} className="video-bg" autoPlay loop muted />
-                <FishTank fishes={fishes} setFishes={setFishes}/>
+                <FishTank fishes={fishes} setFishes={setFishes  }/>
                 <Paw onHit={handlePawHit} clicked={handlePawClick} />
             </div>
             <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>

@@ -4,7 +4,7 @@ import heartBlank from "../../../public/heart_blank.png";
 import "./fish.css"
 import { getFishImage } from './FishHelper';
 
-export default function Fish({id, top, left, feed= false, setFishes}) {
+export default function Fish({id, top, left, feed= false, setFishes, attacked = false}) {
   const [leftPos, setLeft] = useState(left) 
   const [direction, setDirection] = useState(1)
   const [fishImg, setFishImg] = useState()
@@ -61,7 +61,10 @@ export default function Fish({id, top, left, feed= false, setFishes}) {
       <img 
         src={fishImg}
         className='fish-image'
-        style={{transform: `scaleX(${direction})`, width: fishSize}} // flip horizontally
+        style={{transform: `scaleX(${direction})`,
+          width: fishSize, // flip horizontally
+          filter: attacked ? 'brightness(0.5) invert(1)' : 'none'
+        }}
         alt="Fish"
       />
     </div>
