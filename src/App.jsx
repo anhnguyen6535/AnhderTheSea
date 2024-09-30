@@ -6,7 +6,8 @@ import {useEffect, useRef, useState} from "react";
 import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
 import videoBG from "../public/background3.mp4"
-import hitSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
+import hitSound from "../public/Punch Sound.mp3"
+// import hitSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
 import eatSound from "../public/level-up-191997.mp3"
 
 export default function App() {
@@ -138,21 +139,23 @@ export default function App() {
 
     const handlePawHit = (pawPos) => {
         console.log("handle paw hit");
-        if (isPlaying) {
-            hitAud.volume = 0.3
-            hitAud.play();
-        }
-        setFishes(prevFishes => {
-            return prevFishes.map(fish => {
-                // Reset fish in left third, right third, or bottom half
-                if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
-                    (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
-                    (pawPos === 'bottom' && fish.top > 50)) {
-                    return { ...fish, isColliding: false }; // Reset state
-                }
-                return fish;
+        hitAud.volume = 0.5
+        hitAud.play();
+
+        setTimeout(() =>{
+            setFishes(prevFishes => {
+                return prevFishes.map(fish => {
+                    // Reset fish in left third, right third, or bottom half
+                    if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
+                        (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
+                        (pawPos === 'bottom' && fish.top > 50)) {
+                        return { ...fish, isColliding: false }; // Reset state
+                    }
+                    return fish;
+                });
             });
-        });
+
+        }, 500)
     };
 
     return(
