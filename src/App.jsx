@@ -160,7 +160,16 @@ export default function App() {
                         (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
                         (pawPos === 'bottom' && fish.top > 50)) {
 
-                        return { ...fish, isColliding: false , isAttacked: true}; // Reset state
+                        const newFish = { ...fish, isColliding: false , isAttacked: true};
+
+                        setTimeout(() => {
+                            setFishes((prevFishes) =>
+                                prevFishes.map((f) =>
+                                    f.id === fish.id ? { ...f, isAttacked: false } : f
+                                )
+                            );
+                        }, 2000);
+                        return newFish;
                     }
                     return fish;
                 });
