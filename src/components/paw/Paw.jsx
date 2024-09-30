@@ -27,7 +27,7 @@ export default function Paw({ onHit }) {
 
     const feederHeight = 150;
     const pawHeight = 150;
-    const rotationHeight = 150; // since the image was rotated the center is shifted down 75px
+    const rotationHeight = 75; // since the image was rotated the center is shifted down 75px
 
     const minTop = -rotationHeight; // shifting down the center need to reshift it up with respect to the tank
     const maxTop = window.innerHeight - pawHeight - feederHeight - rotationHeight; // the max top value
