@@ -7,7 +7,7 @@ import bgMusic from "../public/happy-day-in-beach-hand-panwav-14755.mp3"
 import { useAudio } from "./hooks/useAudio.js";
 import videoBG from "../public/background3.mp4"
 import hitSound from "../public/Punch Sound.mp3"
-// import hitSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
+import catSound from "../public/angry-cat-hq-sound-effect-2406752.mp3"
 import eatSound from "../public/level-up-191997.mp3"
 
 export default function App() {
@@ -137,6 +137,14 @@ export default function App() {
     }, [timeToEnd]);
 
 
+    const handlePawClick = () => {
+        console.log("handle paw click");
+
+        if (isPlaying) {
+            new Audio(catSound).play();
+        }
+    }
+
     const handlePawHit = (pawPos) => {
         console.log("handle paw hit");
         hitAud.volume = 0.5
@@ -169,7 +177,7 @@ export default function App() {
             <div className="scene__tank">
                 <video src={videoBG} className="video-bg" autoPlay loop muted />
                 <FishTank fishes={fishes} setFishes={setFishes}/>
-                <Paw onHit={handlePawHit} /> {/* Pass the function here */}
+                <Paw onHit={handlePawHit} clicked={handlePawClick} />
             </div>
             <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>
                 Reset: {8 - timeToEnd}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import paw from "../../../public/paw.png";
 import "./paw.css";
 
-export default function Paw({ onHit }) {
+export default function Paw({ onHit, clicked }) {
     const [state, setState] = useState("invisible"); // State can be 'invisible', 'entering', or 'exiting'
     const [finalPositionStyles, setFinalPositionStyles] = useState({}); // Final position when visible
     const [pawPos, setPawPos] = useState(''); // Track the current position
@@ -125,7 +125,7 @@ export default function Paw({ onHit }) {
     // exit
     const exiting = () => {
         // Move back off-screen
-        setFinalPositionStyles((prev) => ({ ...baseStyles, ...styles.initialStyles }));
+        setFinalPositionStyles((prev) => ({ ...baseStyles, ...styles.initialStyles, transition: 'all 1s ease-in-out' }));
 
         // After exiting is done, set to invisible
         const invisibleTimeout = setTimeout(() => {
@@ -162,6 +162,7 @@ export default function Paw({ onHit }) {
     // Handle paw click for immediate exit
     const handlePawClick = () => {
         if (state === "entering") {
+            clicked();
             setState("exiting");
 
             setIsShaking(true);
