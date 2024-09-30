@@ -30,7 +30,7 @@ export default function App() {
     const checkCollision = (fish, food) => {
         // extend hit box here
         const leftMargin = -50
-        const rightMargin = 150 
+        const rightMargin = 150
 
         const fishLeft = fish.left + leftMargin;
         const fishRight = fish.left + rightMargin; // Fish is 100px (as per Fish.jsx)
@@ -135,23 +135,44 @@ export default function App() {
     }, [timeToEnd]);
 
 
-    const handlePawHit = (pawPos) => {
-        console.log("handle paw hit");
+    const handlePawClick = () => {
+        console.log("handle paw click");
+
         if (isPlaying) {
             new Audio(hitSound).play();
         }
+    };
+
+
+    const checkPawCollision = (pawRect, fish) => {
+        // extend hit box here
+        const leftMargin = -50
+        const rightMargin = 150
+
+        const fishLeft = fish.left + leftMargin;
+        const fishRight = fish.left + rightMargin; // Fish is 100px (as per Fish.jsx)
+        const fishTop = (fish.top * window.innerHeight) / 100;
+        const fishBottom = fishTop + 52; // Best guess (from checking elements in console)
+
+        // Hit box collision
+        return !(pawRect.left > fishRight ||
+            pawRect.right < fishLeft ||
+            pawRect.top > fishBottom ||
+            pawRect.bottom < fishTop);
+    };
+
+    const handlePawHit = (pawRect) => {
+        console.log("handle paw hit");
+
         setFishes(prevFishes => {
             return prevFishes.map(fish => {
-                // Reset fish in left third, right third, or bottom half
-                if ((pawPos === 'left' && fish.left < window.innerWidth / 4) ||
-                    (pawPos === 'right' && fish.left > (window.innerWidth * .75)) ||
-                    (pawPos === 'bottom' && fish.top > 50)) {
-                    return { ...fish, isColliding: false }; // Reset state
+                if (checkPawCollision(pawRect, fish)) {
+                    return { ...fish, isColliding: false }; // Reset state to hungry
                 }
                 return fish;
             });
         });
-    };
+    }
 
     return(
         <div className="scene">
@@ -164,7 +185,7 @@ export default function App() {
             <div className="scene__tank">
                 <video src={videoBG} className="video-bg" autoPlay loop muted />
                 <FishTank fishes={fishes} setFishes={setFishes}/>
-                <Paw onHit={handlePawHit} /> {/* Pass the function here */}
+                <Paw onHit={handlePawHit} clicked={handlePawClick}/>
             </div>
             <div className={`end-countdown ${allFull ? 'end-countdown-ani' : ''}`}>
                 Reset: {8 - timeToEnd}
