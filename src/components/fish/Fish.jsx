@@ -9,6 +9,7 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
   const [direction, setDirection] = useState(1)
   const [fishImg, setFishImg] = useState()
   const [fishSize, setFishSize] = useState('100px');
+  const [isAttacked, setIsAttacked] = useState(attacked);
 
   useEffect(() =>{
     const img = getFishImage()
@@ -52,11 +53,11 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
   }, [leftPos, id, setFishes]);
 
   // attacked animation timer
-
   useEffect(() => {
     if (attacked) {
+      setIsAttacked(true);
       setTimeout(() => {
-        attacked = false;
+          setIsAttacked(false);
       }, 2000);
     }
   }, [attacked]);
@@ -73,7 +74,7 @@ export default function Fish({id, top, left, feed= false, setFishes, attacked = 
         // className={`fish-image ${attacked ? 'attacked' : ''} `}
         className='fish-image'
         style={{transform: `scaleX(${direction})`,
-          filter: attacked ? 'brightness(0.5) invert(1)' : 'none',
+          filter: isAttacked ? 'brightness(0.5) invert(1)' : 'none',
           width: fishSize}} // flip horizontally
         alt="Fish"
       />
