@@ -125,7 +125,7 @@ export default function Paw({ onHit }) {
     // exit
     const exiting = () => {
         // Move back off-screen
-        setFinalPositionStyles((prev) => ({ ...baseStyles, ...styles.initialStyles }));
+        setFinalPositionStyles((prev) => ({ ...baseStyles, ...styles.initialStyles, transition: 'all 1s ease-in-out' }));
 
         // After exiting is done, set to invisible
         const invisibleTimeout = setTimeout(() => {
