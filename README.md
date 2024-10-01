@@ -5,6 +5,23 @@
 
 ---
 
+## Project 0
+
+The topic of this project is to create a web application with 2 buttons, reflecting a team member's personality and experiences. The web project was inspired by the creator's experiences with their pets and incorporates interactive elements.
+
+
+---
+
+## Tech Stack:
+
+- React JS
+- CSS
+- React Bootstrap
+- React Multi Carousel
+- Vercel (for deployment)
+
+---
+
 ## Buttons:
 
 ### Food Shaker  
@@ -27,3 +44,13 @@ Click on the link above to play the game.
 - Once all the fish are fed, keep them fed for 8 seconds to restart the game.
 
 Enjoy the game and take care of your virtual fish!
+
+## To Run the Project:
+
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Run the following commands:
+
+   ```bash
+   npm install
+   npm run dev
