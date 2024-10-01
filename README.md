@@ -8,7 +8,7 @@
 ## Buttons:
 
 ### Food Shaker  
-![Food Shaker]((public/feeder.png))  
+![Food Shaker](public/feeder.png)
 
 ### Cat Paw  
 ![Cat Paw](public/paw.png) 
