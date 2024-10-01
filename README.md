@@ -16,8 +16,6 @@ The topic of this project is to create a web application with 2 buttons, reflect
 
 - React JS
 - CSS
-- React Bootstrap
-- React Multi Carousel
 - Vercel (for deployment)
 
 ---
