@@ -5,6 +5,12 @@
 
 ---
 
+## Video Introduction
+
+![Game Preview](public/game-preview.mp4) 
+
+---
+
 ## Project 0
 
 The topic of this project is to create a web application with 2 buttons, reflecting a team member's personality and experiences. The web project was inspired by the creator's experiences with their pets and incorporates interactive elements.
